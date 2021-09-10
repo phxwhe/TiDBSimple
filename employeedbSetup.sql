@@ -1,7 +1,7 @@
 Create database employeedb;
 Use employeedb;
 CREATE TABLE Employee(
-   id        INTEGER  NOT NULL PRIMARY KEY
+   id        INTEGER  NOT NULL PRIMARY KEY AUTO_INCREMENT
   ,firstName VARCHAR(11) NOT NULL
   ,lastName  VARCHAR(17) NOT NULL
   ,username  VARCHAR(35) NOT NULL
