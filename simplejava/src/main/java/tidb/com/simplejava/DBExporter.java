@@ -5,14 +5,14 @@ import java.sql.*;
 
 public class DBExporter {
     public static void main(String[] args) {
-        String jdbcURL = "jdbc:mysql://localhost:3306/customerdb";
+        String jdbcURL = "jdbc:mysql://tidb.dec11076.e93d9e16.us-west-2.prod.aws.tidbcloud.com:4000/bikeshare";
         String username = "root";
-        String password = "";
+        String password = "pingcap1";
 
-        String csvFilePath = "Customer-export.csv";
+        String csvFilePath = "bikedata-export.csv";
 
         try (Connection connection = DriverManager.getConnection(jdbcURL, username, password)) {
-            String sql = "SELECT * FROM customer";
+            String sql = "SELECT * FROM trips";
 
             Statement statement = connection.createStatement();
 
@@ -21,18 +21,16 @@ public class DBExporter {
             BufferedWriter fileWriter = new BufferedWriter(new FileWriter(csvFilePath));
 
             // write header line containing column names
-            fileWriter.write("id, firstname,lastname,username,membership");
+            fileWriter.write("id, rideable_type,lastname,username,shirtsize");
 
             while (result.next()) {
                 //String id= Integer.toString(result.getInt("id"));
                 Integer id= result.getInt("id");
-                String firstname= result.getString("first_name");
-                String lastname = result.getString("last_name");
-                String email = result.getString("email");
-                String shirtsize= result.getString("shirtsize");
+                String rideable_type= result.getString("rideable_type");
+                String member_casual= result.getString("member_casual");
 
-                String line = String.format("%d,%s,%s,%s,%s",
-                        id, firstname, lastname, email, shirtsize);
+                String line = String.format("%d,%s,%s",
+                        id, rideable_type,member_casual);
 
                 fileWriter.newLine();
                 fileWriter.write(line);
